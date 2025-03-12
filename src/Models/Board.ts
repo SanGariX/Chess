@@ -33,7 +33,7 @@ export class Board {
             }
         }
     }
-    public getCopyBoard(setBoard:any): void {
+    public getCopyBoard(setBoard: (board: Board) => void): void {
         const newBoard = new Board();
         newBoard.cells = this.cells
         setBoard(newBoard)

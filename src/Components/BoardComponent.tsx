@@ -8,13 +8,20 @@ type BoardProps = {
 	setBoard: (board: Board) => void
 }
 const BoardComponent: FC<BoardProps> = ({ board, setBoard }) => {
-	const [selectedCell, setSelectedCell] = useState<Cell | null>()
+	const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
 	const [currentColor, setCurrentColor] = useState<string | null>(null)
 	const booleanSelected = (cell : Cell, selectedCell: Cell | null | undefined) : boolean=>{
 		return cell.x === selectedCell?.x && cell.y === selectedCell?.y
 	}
 	const click = (cell: Cell) => {
-		if(!cell.figure)return
+		if(selectedCell && selectedCell !== cell && selectedCell.figure?.canMove(cell)){
+			selectedCell.moveFigure(cell)
+			setSelectedCell(null)
+			setCurrentColor(null)
+			console.log(!!selectedCell)
+			console.log(!!selectedCell)
+		}
+		if(!cell.figure || !!selectedCell) return
 		setSelectedCell(cell)
 		setCurrentColor(cell?.figure.color)
 	}
